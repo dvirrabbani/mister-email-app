@@ -45,7 +45,10 @@ a:hover {
 }
 
 button {
+  background: none;
+  border: none;
   font-family: inherit;
+  padding: 0;
   cursor: pointer;
 
   * {
@@ -85,11 +88,6 @@ input {
 menu {
   margin: 0;
   padding: 0;
-}
-
-button {
-  background: none;
-  border: none;
 }
 
 ul {
