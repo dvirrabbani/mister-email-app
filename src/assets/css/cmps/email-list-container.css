@@ -1,0 +1,8 @@
+.email-list-container {
+  border-radius: 16px;
+  background-color: var(--white);
+}
+
+.email-list-container > .email-list-header {
+  min-height: 32px;
+}

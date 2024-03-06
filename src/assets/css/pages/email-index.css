@@ -10,7 +10,7 @@
   background-color: var(--bgColor1);
 }
 
-.email-index > * {
+.email-index > *:not(.email-index-main) {
   border: 1px solid black;
 }
 
