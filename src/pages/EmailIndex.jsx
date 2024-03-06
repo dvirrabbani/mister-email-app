@@ -1,18 +1,24 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { emailService } from '../services/email.service';
 import { EmailIndexHeader } from '../cmps/EmailIndexHeader';
 import { EmailListContainer } from '../cmps/EmailListContainer';
 
 export function EmailIndex() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [emails, setEmails] = useState(null);
+  const [filterBy, setFilterBy] = useState(
+    emailService.getFilterFromParams(searchParams)
+  );
 
   useEffect(() => {
+    setSearchParams(emailService.sentizeFilterBy(filterBy));
     loadEmails();
-  }, []);
+  }, [filterBy]);
 
   async function loadEmails() {
     try {
-      const emails = await emailService.query();
+      const emails = await emailService.query(filterBy);
       setEmails(emails);
     } catch (error) {
       console.log('Error in load emails', error);
@@ -44,10 +50,15 @@ export function EmailIndex() {
     }
   }
 
+  function onSetFilter(fieldsToUpdate) {
+    setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }));
+  }
+
+  const { body } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
     <section className="email-index">
-      <EmailIndexHeader />
+      <EmailIndexHeader filterBy={{ body }} onSetFilter={onSetFilter} />
       <nav className="navbar"></nav>
       <main className="email-index-main">
         <EmailListContainer
