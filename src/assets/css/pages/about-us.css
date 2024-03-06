@@ -1,0 +1,12 @@
+.about-us {
+  text-align: center;
+}
+
+.about-us h1 {
+  font-size: 40px;
+  margin: 10px;
+}
+
+.about-us img {
+  width: 500px;
+}
