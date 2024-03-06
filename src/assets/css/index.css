@@ -3,6 +3,7 @@
 @import 'basics/helpers.css';
 @import 'basics/layout.css';
 @import 'basics/animations.css';
+@import 'basics/vars.css';
 
 /* Pages */
 @import './pages/home.css';
@@ -10,4 +11,4 @@
 @import './pages/email-index.css';
 
 /* Components */
-@import './cmps/app-header.css';
+@import './cmps/email-index-header.css';

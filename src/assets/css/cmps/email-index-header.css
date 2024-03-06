@@ -1,0 +1,46 @@
+.email-index-header {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+}
+
+.email-index-header .menu > .menu-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.email-index-header .search-bar {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  max-width: 720px;
+  width: 100%;
+  border-radius: 24px;
+  background-color: var(--bgColor-seach-bar);
+}
+
+.email-index-header .search-bar input {
+  border: none;
+  background-color: inherit;
+  outline: none;
+}
+
+.email-index-header .user-preferences-bar {
+  display: flex;
+  gap: 6px;
+}
+
+.email-index-header .profile-logo {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  background-color: #01579b;
+}
