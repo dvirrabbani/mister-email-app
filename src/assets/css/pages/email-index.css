@@ -1,0 +1,33 @@
+.email-index {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  gap: 6px;
+  grid-template-areas:
+    'h h h'
+    'n m a';
+}
+
+.email-index > * {
+  border: 1px solid black;
+}
+
+.email-index > .email-index-header {
+  height: 100px;
+  grid-area: h;
+}
+
+.email-index > .navbar {
+  min-width: 100px;
+  grid-area: n;
+}
+
+.email-index > .email-index-main {
+  grid-area: m;
+}
+
+.email-index > .addon-list-container {
+  width: 100px;
+  grid-area: a;
+}
