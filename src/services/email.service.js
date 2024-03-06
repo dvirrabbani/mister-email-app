@@ -1,7 +1,7 @@
 import { utilService } from './util.service';
 import { storageService } from './async-storage.service';
 
-export const emailService = { query };
+export const emailService = { query, remove };
 
 const STORAGE_KEY = 'emails';
 
@@ -38,4 +38,8 @@ function _createEmails() {
 async function query() {
   let emails = await storageService.query(STORAGE_KEY);
   return emails;
+}
+
+async function remove(id) {
+  return storageService.remove(STORAGE_KEY, id);
 }

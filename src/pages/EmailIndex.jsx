@@ -19,13 +19,25 @@ export function EmailIndex() {
     }
   }
 
+  async function onRemoveEmail(emailId) {
+    console.log('remove');
+    try {
+      await emailService.remove(emailId);
+      setEmails((prevEmails) =>
+        prevEmails.filter((currEmail) => currEmail.id !== emailId)
+      );
+    } catch (err) {
+      console.log('Error in update email', err);
+    }
+  }
+
   if (!emails) return <div>loading...</div>;
   return (
     <section className="email-index">
       <EmailIndexHeader />
       <nav className="navbar"></nav>
       <main className="email-index-main">
-        <EmailListContainer emails={emails} />
+        <EmailListContainer emails={emails} onRemoveEmail={onRemoveEmail} />
       </main>
       <aside className="addon-list-container"></aside>
     </section>
