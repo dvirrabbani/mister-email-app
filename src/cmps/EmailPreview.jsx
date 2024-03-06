@@ -1,11 +1,17 @@
 import {
-  MdOutlineStarBorder as FavoriteIcon,
+  MdOutlineStarBorder as StarIconOutlineIcon,
+  MdOutlineStar as StarIconIcon,
   MdDelete as DeleteIcon,
   MdMarkunread as UnReadIcon,
   MdOutlineMarkEmailRead as ReadIcon,
 } from 'react-icons/md';
 
-export function EmailPreview({ email, onRemoveEmail, onChangeEmailRead }) {
+export function EmailPreview({
+  email,
+  onRemoveEmail,
+  onChangeEmailRead,
+  onChangeEmailStarred,
+}) {
   return (
     <li className={`email-preview${email.isRead ? ' email-status-read' : ''}`}>
       <span className="email-title">{email.from}</span>
@@ -13,8 +19,8 @@ export function EmailPreview({ email, onRemoveEmail, onChangeEmailRead }) {
         {email.body} {email.subject}
       </span>
       <div className="email-actions">
-        <button>
-          <FavoriteIcon />
+        <button onClick={() => onChangeEmailStarred(email)}>
+          {email.isStarred ? <StarIconIcon /> : <StarIconOutlineIcon />}
         </button>
         <button onClick={() => onChangeEmailRead(email)}>
           {email.isRead ? <ReadIcon /> : <UnReadIcon />}
