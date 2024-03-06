@@ -16,7 +16,7 @@ export function EmailPreview({
     <li className={`email-preview${email.isRead ? ' email-status-read' : ''}`}>
       <span className="email-title">{email.from}</span>
       <span className="email-content">
-        {email.body} {email.subject}
+        {email.subject} {email.body}
       </span>
       <div className="email-actions">
         <button onClick={() => onChangeEmailStarred(email)}>
