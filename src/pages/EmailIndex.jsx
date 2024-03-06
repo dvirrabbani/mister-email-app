@@ -31,13 +31,30 @@ export function EmailIndex() {
     }
   }
 
+  async function onUpdateEmail(email) {
+    try {
+      const updatedEmail = await emailService.save(email);
+      setEmails((prevEmails) =>
+        prevEmails.map((currEmail) =>
+          currEmail.id === updatedEmail.id ? updatedEmail : currEmail
+        )
+      );
+    } catch (err) {
+      console.log('Error in update email', err);
+    }
+  }
+
   if (!emails) return <div>loading...</div>;
   return (
     <section className="email-index">
       <EmailIndexHeader />
       <nav className="navbar"></nav>
       <main className="email-index-main">
-        <EmailListContainer emails={emails} onRemoveEmail={onRemoveEmail} />
+        <EmailListContainer
+          emails={emails}
+          onRemoveEmail={onRemoveEmail}
+          onUpdateEmail={onUpdateEmail}
+        />
       </main>
       <aside className="addon-list-container"></aside>
     </section>

@@ -1,7 +1,7 @@
 import { utilService } from './util.service';
 import { storageService } from './async-storage.service';
 
-export const emailService = { query, remove };
+export const emailService = { query, remove, save };
 
 const STORAGE_KEY = 'emails';
 
@@ -42,4 +42,12 @@ async function query() {
 
 async function remove(id) {
   return storageService.remove(STORAGE_KEY, id);
+}
+
+async function save(emailToSave) {
+  if (emailToSave.id) {
+    return storageService.put(STORAGE_KEY, emailToSave);
+  } else {
+    return storageService.post(STORAGE_KEY, emailToSave);
+  }
 }

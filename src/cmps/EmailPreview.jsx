@@ -5,7 +5,7 @@ import {
   MdOutlineMarkEmailRead as ReadIcon,
 } from 'react-icons/md';
 
-export function EmailPreview({ email, onRemoveEmail }) {
+export function EmailPreview({ email, onRemoveEmail, onChangeEmailRead }) {
   return (
     <li className={`email-preview${email.isRead ? ' email-status-read' : ''}`}>
       <span className="email-title">{email.from}</span>
@@ -16,7 +16,9 @@ export function EmailPreview({ email, onRemoveEmail }) {
         <button>
           <FavoriteIcon />
         </button>
-        <button>{email.isRead ? <ReadIcon /> : <UnReadIcon />}</button>
+        <button onClick={() => onChangeEmailRead(email)}>
+          {email.isRead ? <ReadIcon /> : <UnReadIcon />}
+        </button>
         <button onClick={() => onRemoveEmail(email.id)}>
           <DeleteIcon />
         </button>
