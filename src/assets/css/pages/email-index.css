@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
-  gap: 6px;
+  gap: var(--mail-page-layout-grid-gap);
   grid-template-areas:
     'h h h'
     'n m a';
@@ -16,6 +16,7 @@
 
 .email-index > .email-index-header {
   grid-area: h;
+  height: var(--mail-page-header-height);
 }
 
 .email-index > .navbar {
@@ -25,6 +26,10 @@
 
 .email-index > .email-index-main {
   grid-area: m;
+  height: calc(
+    100vh - var(--mail-page-header-height) - var(--mail-page-layout-grid-gap) *
+      2
+  );
 }
 
 .email-index > .addon-list-container {
