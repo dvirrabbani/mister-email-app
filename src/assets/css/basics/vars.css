@@ -1,6 +1,11 @@
 :root {
+  /* colors */
   --bgColor1: #f6f8fc;
   --bgColor2: #f2f6fc;
   --bgColor-seach-bar: #eaf1fb;
   --white: #fff;
+
+  /* elements */
+  --mail-page-header-height: 55px;
+  --mail-page-layout-grid-gap: 6px;
 }
