@@ -1,6 +1,9 @@
 .email-list-container {
   border-radius: 16px;
   background-color: var(--white);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
 }
 
 .email-list-container > .email-list-header {
