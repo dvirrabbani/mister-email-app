@@ -1,6 +1,13 @@
+import { EmailFilter } from './EmailFilter';
 import { EmailList } from './EmailList';
 
-export function EmailListContainer({ emails, onRemoveEmail, onUpdateEmail }) {
+export function EmailListContainer({
+  emails,
+  onRemoveEmail,
+  onUpdateEmail,
+  filterBy,
+  onSetFilter,
+}) {
   function onChangeEmailRead(email) {
     const newEmail = { ...email, isRead: !email.isRead };
     onUpdateEmail(newEmail);
@@ -13,7 +20,9 @@ export function EmailListContainer({ emails, onRemoveEmail, onUpdateEmail }) {
 
   return (
     <div className="email-list-container">
-      <header className="email-list-header"></header>
+      <header className="email-list-header">
+        <EmailFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+      </header>
       <EmailList
         emails={emails}
         onRemoveEmail={onRemoveEmail}

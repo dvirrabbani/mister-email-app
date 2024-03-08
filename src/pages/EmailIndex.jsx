@@ -54,7 +54,7 @@ export function EmailIndex() {
     setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }));
   }
 
-  const { body } = filterBy;
+  const { body, isRead } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
     <section className="email-index">
@@ -63,6 +63,8 @@ export function EmailIndex() {
       <main className="email-index-main">
         <EmailListContainer
           emails={emails}
+          filterBy={{ isRead }}
+          onSetFilter={onSetFilter}
           onRemoveEmail={onRemoveEmail}
           onUpdateEmail={onUpdateEmail}
         />

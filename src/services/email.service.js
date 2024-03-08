@@ -15,12 +15,7 @@ _createEmails();
 
 async function query(filterBy) {
   let emails = await storageService.query(STORAGE_KEY);
-  if (filterBy) {
-    let { body = '' } = filterBy;
-    const regexBodyTerm = new RegExp(body, 'i');
-    emails = emails.filter((email) => regexBodyTerm.test(email.body));
-  }
-
+  if (filterBy) emails = _filterEmailsBy(emails, filterBy);
   return emails;
 }
 
@@ -39,6 +34,7 @@ async function save(emailToSave) {
 function getDefaultFilter() {
   return {
     body: '',
+    isRead: null,
   };
 }
 
@@ -47,16 +43,44 @@ function getFilterFromParams(searchParams) {
   const filterBy = {};
 
   for (const field in defaultFilter) {
-    filterBy[field] = searchParams.get(field) || defaultFilter[field];
+    const searchParamValue = searchParams.get(field);
+    if (searchParamValue === 'false') {
+      filterBy[field] = false;
+    } else if (searchParamValue === 'true') {
+      filterBy[field] = true;
+    } else {
+      filterBy[field] = searchParamValue || defaultFilter[field];
+    }
   }
   return filterBy;
+}
+
+function _filterEmailsBy(emails, filterBy) {
+  let { body = '', isRead = null } = filterBy;
+
+  let filteredEmails = emails.filter((email) => {
+    let filters = [];
+
+    if (isRead !== null) {
+      filters.push(email.isRead === isRead);
+    }
+
+    if (body) {
+      filters.push(email.body.toLowerCase().includes(body.toLowerCase()));
+    }
+
+    const isFiltersMatched = filters.every((filter) => Boolean(filter));
+    return isFiltersMatched;
+  });
+
+  return filteredEmails;
 }
 
 function sentizeFilterBy(filterBy) {
   const senitizedFilterBy = { ...filterBy };
 
   for (const [field, value] of Object.entries(filterBy)) {
-    if (!value) {
+    if (value === '' || value === null) {
       delete senitizedFilterBy[field];
     }
   }
