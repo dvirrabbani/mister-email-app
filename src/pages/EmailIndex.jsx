@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { emailService } from '../services/email.service';
 import { EmailIndexHeader } from '../cmps/EmailIndexHeader';
-import { EmailListContainer } from '../cmps/EmailListContainer';
+import Navbar from '../cmps/Navbar';
 
 export function EmailIndex() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [emails, setEmails] = useState(null);
+  const params = useParams();
   const [filterBy, setFilterBy] = useState(
     emailService.getFilterFromParams(searchParams)
   );
@@ -15,6 +16,10 @@ export function EmailIndex() {
     setSearchParams(emailService.sentizeFilterBy(filterBy));
     loadEmails();
   }, [filterBy]);
+
+  useEffect(() => {
+    setFilterBy((filterBy) => ({ ...filterBy, status: params.status }));
+  }, [params.status]);
 
   async function loadEmails() {
     try {
@@ -54,19 +59,22 @@ export function EmailIndex() {
     setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }));
   }
 
-  const { body, isRead } = filterBy;
+  const { body } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
     <section className="email-index">
       <EmailIndexHeader filterBy={{ body }} onSetFilter={onSetFilter} />
-      <nav className="navbar"></nav>
+      <Navbar />
       <main className="email-index-main">
-        <EmailListContainer
-          emails={emails}
-          filterBy={{ isRead }}
-          onSetFilter={onSetFilter}
-          onRemoveEmail={onRemoveEmail}
-          onUpdateEmail={onUpdateEmail}
+        <Outlet
+          context={{
+            emails,
+            filterBy,
+            onSetFilter,
+            onRemoveEmail,
+            onUpdateEmail,
+            params,
+          }}
         />
       </main>
       <aside className="addon-list-container"></aside>
