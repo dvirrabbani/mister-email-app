@@ -10,6 +10,7 @@ export const emailService = {
 };
 
 const STORAGE_KEY = 'emails';
+const loggedinUser = { email: 'user@appsus.com', fullname: 'Mahatma Appsus' };
 
 _createEmails();
 
@@ -35,6 +36,7 @@ function getDefaultFilter() {
   return {
     body: '',
     isRead: null,
+    status: 'inbox',
   };
 }
 
@@ -56,7 +58,7 @@ function getFilterFromParams(searchParams) {
 }
 
 function _filterEmailsBy(emails, filterBy) {
-  let { body = '', isRead = null } = filterBy;
+  let { body = '', isRead = null, status } = filterBy;
 
   let filteredEmails = emails.filter((email) => {
     let filters = [];
@@ -67,6 +69,15 @@ function _filterEmailsBy(emails, filterBy) {
 
     if (body) {
       filters.push(email.body.toLowerCase().includes(body.toLowerCase()));
+    }
+
+    switch (status) {
+      case 'inbox':
+        filters.push(email.to === loggedinUser.email);
+      case 'sent':
+        filters.push(email.from === loggedinUser.email);
+      case 'starred':
+        filters.push(email.isStarred);
     }
 
     const isFiltersMatched = filters.every((filter) => Boolean(filter));
@@ -80,7 +91,7 @@ function sentizeFilterBy(filterBy) {
   const senitizedFilterBy = { ...filterBy };
 
   for (const [field, value] of Object.entries(filterBy)) {
-    if (value === '' || value === null) {
+    if (value === '' || value === null || field === 'status') {
       delete senitizedFilterBy[field];
     }
   }
@@ -90,8 +101,8 @@ function sentizeFilterBy(filterBy) {
 function _createEmails() {
   let emails = utilService.loadFromStorage(STORAGE_KEY);
   if (!emails || !emails.length) {
-    const arrLength = 10;
-    const contactList = ['jone@momo.com', 'done@gmail.com', 'sun@gmail.com'];
+    const arrLength = 30;
+    const contactList = ['user@appsus.com', 'done@gmail.com', 'sun@gmail.com'];
     const subjectsList = ['Hi, how are you', 'Welcome', 'Join now'];
     const bodyList = ['this is a body', 'body', 'different body'];
     const booleanValuesList = [true, false];
