@@ -1,3 +1,4 @@
+import { Link, useParams } from 'react-router-dom';
 import {
   MdOutlineStarBorder as StarIconOutlineIcon,
   MdOutlineStar as StarIconIcon,
@@ -12,14 +13,28 @@ export function EmailPreview({
   onChangeEmailRead,
   onChangeEmailStarred,
 }) {
+  const params = useParams();
+
+  function onClickEmailActions(ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+  }
+
   return (
-    <li className={`email-preview${email.isRead ? ' email-status-read' : ''}`}>
+    <Link
+      to={`/email/${params.folder}/${email.id}`}
+      className={`email-preview${email.isRead ? ' email-status-read' : ''}`}
+    >
       <span className="email-title">{email.from}</span>
       <span className="email-content">
         {email.subject} {email.body}
       </span>
-      <div className="email-actions">
-        <button onClick={() => onChangeEmailStarred(email)}>
+      <div className="email-actions" onClick={onClickEmailActions}>
+        <button
+          onClick={() => {
+            onChangeEmailStarred(email);
+          }}
+        >
           {email.isStarred ? <StarIconIcon /> : <StarIconOutlineIcon />}
         </button>
         <button onClick={() => onChangeEmailRead(email)}>
@@ -29,6 +44,6 @@ export function EmailPreview({
           <DeleteIcon />
         </button>
       </div>
-    </li>
+    </Link>
   );
 }
