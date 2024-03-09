@@ -6,8 +6,8 @@ import {
 } from 'react-icons/md';
 import { BsPen as PenIcon } from 'react-icons/bs';
 
-export function EmailNavbar() {
-  const [_, setSearchParams] = useSearchParams();
+export function EmailNavbar({ setEmailComposeVisible }) {
+  const [, setSearchParams] = useSearchParams();
   const emailFolders = [
     {
       label: 'Inbox',
@@ -28,6 +28,7 @@ export function EmailNavbar() {
 
   function onComposeEmail() {
     setSearchParams((prev) => ({ ...prev, compose: 'new' }));
+    setEmailComposeVisible(true);
   }
 
   return (

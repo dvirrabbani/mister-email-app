@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { emailService } from '../services/email.service';
+import { MdClose as CloseIcon } from 'react-icons/md';
 
-export function EmailCompose({ loadEmails }) {
+export function EmailCompose({
+  isComposeOpen,
+  setEmailComposeVisible,
+  loadEmails,
+}) {
   const [searchParams] = useSearchParams();
-  const [showCompose, setShowCompose] = useState(false);
   const [emailToEdit, setEmailToEdit] = useState(
     emailService.getDefaultEmail()
   );
 
   useEffect(() => {
     const composeParam = searchParams.get('compose');
-    if (composeParam === 'new') {
-      setShowCompose(true);
+    if (composeParam === 'new' && !isComposeOpen) {
+      setEmailComposeVisible(true);
     }
   }, [searchParams]);
 
@@ -28,18 +32,27 @@ export function EmailCompose({ loadEmails }) {
     try {
       ev.preventDefault();
       await emailService.save(emailToEdit);
+      onCloseCompose();
       loadEmails();
     } catch (error) {
       console.log('Had Some issue saving email', emailToEdit);
     }
   }
 
-  if (!showCompose) return null;
+  function onCloseCompose() {
+    setEmailComposeVisible(false);
+    setEmailToEdit(emailService.getDefaultEmail());
+  }
+
+  if (!isComposeOpen) return null;
   return (
     <div className="email-compose-container">
       <div className="email-compose">
         <header className="email-compose-header">
           <h3>New Message</h3>
+          <button onClick={onCloseCompose}>
+            <CloseIcon />
+          </button>
         </header>
         <form className="email-compose-form" onSubmit={onSaveEmail}>
           <input
@@ -60,7 +73,9 @@ export function EmailCompose({ loadEmails }) {
             type="text"
             placeholder="Content"
           />
-          <button className="submit-btn">Send</button>
+          <footer>
+            <button className="submit-btn">Send</button>
+          </footer>
         </form>
       </div>
     </div>

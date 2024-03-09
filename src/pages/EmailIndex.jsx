@@ -9,11 +9,21 @@ export function EmailIndex() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [emails, setEmails] = useState(null);
   const params = useParams();
+  const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [filterBy, setFilterBy] = useState(
     emailService.getFilterFromParams(searchParams)
   );
   useEffect(() => {
-    setSearchParams(emailService.sentizeFilterBy(filterBy));
+    setSearchParams((prevSearchParams) => {
+      // persist previous search params
+      const searchParamsObj = {};
+      prevSearchParams.forEach((value, key) => (searchParamsObj[key] = value));
+
+      return {
+        ...searchParamsObj,
+        ...emailService.sentizeFilterBy(filterBy),
+      };
+    });
     loadEmails();
   }, [filterBy]);
 
@@ -59,12 +69,16 @@ export function EmailIndex() {
     setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }));
   }
 
+  function setEmailComposeVisible(value) {
+    setIsComposeOpen(() => value);
+  }
+
   const { body } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
     <section className="email-index">
       <EmailIndexHeader filterBy={{ body }} onSetFilter={onSetFilter} />
-      <EmailNavbar />
+      <EmailNavbar setEmailComposeVisible={setEmailComposeVisible} />
       <main className="email-index-main">
         <Outlet
           context={{
@@ -76,7 +90,11 @@ export function EmailIndex() {
             params,
           }}
         />
-        <EmailCompose loadEmails={loadEmails} />
+        <EmailCompose
+          loadEmails={loadEmails}
+          isComposeOpen={isComposeOpen}
+          setEmailComposeVisible={setEmailComposeVisible}
+        />
       </main>
       <aside className="addon-list-container"></aside>
     </section>
