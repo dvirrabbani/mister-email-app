@@ -1,0 +1,22 @@
+.email-details {
+  height: 100%;
+  background: var(--white);
+  padding: 16px;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 16px;
+}
+
+.email-details .title {
+  font-weight: bold;
+}
+
+.email-details .info {
+  font-weight: 500;
+  display: flex;
+  gap: 8px;
+}
+
+.email-details .info > span {
+  color: var(--greyColor1);
+}
