@@ -15,15 +15,19 @@
     0px 3px 14px 2px rgba(0, 0, 0, 0.12), 0px 5px 5px -3px rgba(0, 0, 0, 0.2);
 }
 
-.email-compose-container header {
+.email-compose-container .email-compose-header {
   background-color: var(--bgColor2);
-  padding: 10px 0px 10px 12px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .email-compose-container .email-compose .email-compose-form {
   padding: 0px 16px 16px 16px;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
+  gap: 6px;
 }
 
 .email-compose-container .email-compose-form textarea {
@@ -31,5 +35,13 @@
   resize: none;
 }
 .email-compose-container .email-compose-form .submit-btn {
-  width: fit-content;
+  background-color: var(--btn-primary-color);
+  border-radius: 8px;
+  padding: 10px 16px;
+
+  color: var(--white);
+}
+.email-compose-container .email-compose-form .submit-btn:hover {
+  box-shadow: 0 1px 2px 0 rgba(26, 115, 232, 0.451),
+    0 1px 3px 1px rgba(26, 115, 232, 0.302);
 }
