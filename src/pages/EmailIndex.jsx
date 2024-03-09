@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { emailService } from '../services/email.service';
 import { EmailIndexHeader } from '../cmps/EmailIndexHeader';
-import EmailNavbar from '../cmps/EmailNavbar';
+import { EmailNavbar } from '../cmps/EmailNavbar';
 
 export function EmailIndex() {
   const [searchParams, setSearchParams] = useSearchParams();
