@@ -30,6 +30,7 @@
     100vh - var(--mail-page-header-height) - var(--mail-page-layout-grid-gap) *
       2
   );
+  background-color: var(--white);
 }
 
 .email-index > .addon-list-container {
