@@ -8,7 +8,7 @@ import {
 import { Home } from './pages/Home';
 import { AboutUs } from './pages/AboutUs';
 import { EmailIndex } from './pages/EmailIndex';
-import { EmailFolder } from './pages/EmailFolder';
+import { EmailFolderList } from './pages/EmailFolderList';
 
 export function App() {
   return (
@@ -20,7 +20,7 @@ export function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/email" element={<EmailIndex />}>
             <Route index element={<Navigate to={'/email/inbox'} />} />
-            <Route path="/email/:status" element={<EmailFolder />} />
+            <Route path="/email/:folder" element={<EmailFolderList />} />
           </Route>
         </Routes>
       </Router>

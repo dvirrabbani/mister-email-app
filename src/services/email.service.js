@@ -36,7 +36,7 @@ function getDefaultFilter() {
   return {
     body: '',
     isRead: null,
-    status: 'inbox',
+    folder: 'inbox',
   };
 }
 
@@ -58,7 +58,7 @@ function getFilterFromParams(searchParams) {
 }
 
 function _filterEmailsBy(emails, filterBy) {
-  let { body = '', isRead = null, status } = filterBy;
+  let { body = '', isRead = null, folder } = filterBy;
 
   let filteredEmails = emails.filter((email) => {
     let filters = [];
@@ -71,7 +71,7 @@ function _filterEmailsBy(emails, filterBy) {
       filters.push(email.body.toLowerCase().includes(body.toLowerCase()));
     }
 
-    switch (status) {
+    switch (folder) {
       case 'inbox':
         filters.push(email.to === loggedinUser.email);
       case 'sent':
@@ -91,7 +91,7 @@ function sentizeFilterBy(filterBy) {
   const senitizedFilterBy = { ...filterBy };
 
   for (const [field, value] of Object.entries(filterBy)) {
-    if (value === '' || value === null || field === 'status') {
+    if (value === '' || value === null || field === 'folder') {
       delete senitizedFilterBy[field];
     }
   }

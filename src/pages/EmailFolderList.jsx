@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import { EmailListContainer } from '../cmps/EmailListContainer';
 
-export function EmailFolder() {
+export function EmailFolderList() {
   const context = useOutletContext();
   const {
     emails,

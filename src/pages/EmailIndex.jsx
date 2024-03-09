@@ -18,8 +18,8 @@ export function EmailIndex() {
   }, [filterBy]);
 
   useEffect(() => {
-    setFilterBy((filterBy) => ({ ...filterBy, status: params.status }));
-  }, [params.status]);
+    setFilterBy((filterBy) => ({ ...filterBy, folder: params.folder }));
+  }, [params.folder]);
 
   async function loadEmails() {
     try {
