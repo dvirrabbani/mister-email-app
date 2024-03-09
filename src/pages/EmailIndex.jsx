@@ -3,6 +3,7 @@ import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { emailService } from '../services/email.service';
 import { EmailIndexHeader } from '../cmps/EmailIndexHeader';
 import { EmailNavbar } from '../cmps/EmailNavbar';
+import { EmailCompose } from './EmailCompose';
 
 export function EmailIndex() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -11,7 +12,6 @@ export function EmailIndex() {
   const [filterBy, setFilterBy] = useState(
     emailService.getFilterFromParams(searchParams)
   );
-
   useEffect(() => {
     setSearchParams(emailService.sentizeFilterBy(filterBy));
     loadEmails();
@@ -76,6 +76,7 @@ export function EmailIndex() {
             params,
           }}
         />
+        <EmailCompose loadEmails={loadEmails} />
       </main>
       <aside className="addon-list-container"></aside>
     </section>

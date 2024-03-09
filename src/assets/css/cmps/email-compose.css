@@ -1,0 +1,35 @@
+.email-compose-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.email-compose-container .email-compose {
+  width: 460px;
+  height: 478px;
+  background-color: var(--white);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0px 3px 14px 2px rgba(0, 0, 0, 0.12), 0px 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+
+.email-compose-container header {
+  background-color: var(--bgColor2);
+  padding: 10px 0px 10px 12px;
+}
+
+.email-compose-container .email-compose .email-compose-form {
+  padding: 0px 16px 16px 16px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+.email-compose-container .email-compose-form textarea {
+  width: 100% !important;
+  resize: none;
+}
+.email-compose-container .email-compose-form .submit-btn {
+  width: fit-content;
+}
