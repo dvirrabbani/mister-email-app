@@ -8,6 +8,7 @@ export const emailService = {
   getFilterFromParams,
   sentizeFilterBy,
   getById,
+  getDefaultEmail,
 };
 
 const STORAGE_KEY = 'emails';
@@ -33,6 +34,11 @@ async function save(emailToSave) {
   if (emailToSave.id) {
     return storageService.put(STORAGE_KEY, emailToSave);
   } else {
+    emailToSave.isRead = null;
+    emailToSave.isStarred = false;
+    emailToSave.sentAt = new Date().getTime();
+    emailToSave.removedAt = null;
+    emailToSave.from = loggedinUser.email;
     return storageService.post(STORAGE_KEY, emailToSave);
   }
 }
@@ -73,6 +79,14 @@ function getFilterFromParams(searchParams) {
   return filterBy;
 }
 
+function getDefaultEmail() {
+  return {
+    to: '',
+    subject: '',
+    body: '',
+  };
+}
+
 function _filterEmailsBy(emails, filterBy) {
   let { body = '', isRead = null, folder } = filterBy;
 
@@ -90,10 +104,13 @@ function _filterEmailsBy(emails, filterBy) {
     switch (folder) {
       case 'inbox':
         filters.push(email.to === loggedinUser.email);
+        break;
       case 'sent':
         filters.push(email.from === loggedinUser.email);
+        break;
       case 'starred':
         filters.push(email.isStarred);
+        break;
     }
 
     const isFiltersMatched = filters.every((filter) => Boolean(filter));
