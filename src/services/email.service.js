@@ -7,6 +7,7 @@ export const emailService = {
   save,
   getFilterFromParams,
   sentizeFilterBy,
+  getById,
 };
 
 const STORAGE_KEY = 'emails';
@@ -20,6 +21,10 @@ async function query(filterBy) {
   return emails;
 }
 
+function getById(id) {
+  return storageService.get(STORAGE_KEY, id);
+}
+
 async function remove(id) {
   return storageService.remove(STORAGE_KEY, id);
 }
@@ -30,6 +35,17 @@ async function save(emailToSave) {
   } else {
     return storageService.post(STORAGE_KEY, emailToSave);
   }
+}
+
+function sentizeFilterBy(filterBy) {
+  const senitizedFilterBy = { ...filterBy };
+
+  for (const [field, value] of Object.entries(filterBy)) {
+    if (value === '' || value === null || field === 'folder') {
+      delete senitizedFilterBy[field];
+    }
+  }
+  return senitizedFilterBy;
 }
 
 function getDefaultFilter() {
@@ -85,17 +101,6 @@ function _filterEmailsBy(emails, filterBy) {
   });
 
   return filteredEmails;
-}
-
-function sentizeFilterBy(filterBy) {
-  const senitizedFilterBy = { ...filterBy };
-
-  for (const [field, value] of Object.entries(filterBy)) {
-    if (value === '' || value === null || field === 'folder') {
-      delete senitizedFilterBy[field];
-    }
-  }
-  return senitizedFilterBy;
 }
 
 function _createEmails() {
