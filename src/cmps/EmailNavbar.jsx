@@ -1,11 +1,13 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import {
   MdAllInbox as InboxIcon,
   MdOutlineStarBorder as StarIcon,
   MdOutlineForwardToInbox as SentIcon,
 } from 'react-icons/md';
+import { BsPen as PenIcon } from 'react-icons/bs';
 
 export function EmailNavbar() {
+  const [_, setSearchParams] = useSearchParams();
   const emailFolders = [
     {
       label: 'Inbox',
@@ -24,9 +26,17 @@ export function EmailNavbar() {
     },
   ];
 
+  function onComposeEmail() {
+    setSearchParams((prev) => ({ ...prev, compose: 'new' }));
+  }
+
   return (
     <nav className="email-navbar">
       <ul>
+        <button onClick={onComposeEmail}>
+          <PenIcon />
+          <span>Compose</span>
+        </button>
         {emailFolders.map((emailFolder) => {
           return (
             <li key={emailFolder.label}>
