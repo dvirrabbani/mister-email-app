@@ -5,7 +5,7 @@ import {
   MdOutlineForwardToInbox as SentIcon,
 } from 'react-icons/md';
 
-export default function Navbar() {
+export default function EmailNavbar() {
   const emailFolders = [
     {
       label: 'Inbox',
@@ -25,7 +25,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="navbar">
+    <nav className="email-navbar">
       <ul>
         {emailFolders.map((emailFolder) => {
           return (

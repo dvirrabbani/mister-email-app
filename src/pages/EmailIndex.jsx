@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { emailService } from '../services/email.service';
 import { EmailIndexHeader } from '../cmps/EmailIndexHeader';
-import Navbar from '../cmps/Navbar';
+import EmailNavbar from '../cmps/EmailNavbar';
 
 export function EmailIndex() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -64,7 +64,7 @@ export function EmailIndex() {
   return (
     <section className="email-index">
       <EmailIndexHeader filterBy={{ body }} onSetFilter={onSetFilter} />
-      <Navbar />
+      <EmailNavbar />
       <main className="email-index-main">
         <Outlet
           context={{

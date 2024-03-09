@@ -19,7 +19,7 @@
   height: var(--mail-page-header-height);
 }
 
-.email-index > .navbar {
+.email-index > .email-navbar {
   min-width: 100px;
   grid-area: n;
 }
