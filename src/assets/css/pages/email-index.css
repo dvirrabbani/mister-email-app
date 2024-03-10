@@ -32,6 +32,8 @@
       2
   );
   background-color: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .email-index > .addon-list-container {
