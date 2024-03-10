@@ -3,7 +3,7 @@ import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { emailService } from '../services/email.service';
 import { EmailIndexHeader } from '../cmps/EmailIndexHeader';
 import { EmailNavbar } from '../cmps/EmailNavbar';
-import { EmailCompose } from './EmailCompose';
+import { EmailCompose } from '../cmps/EmailCompose';
 
 export function EmailIndex() {
   const [searchParams, setSearchParams] = useSearchParams();
