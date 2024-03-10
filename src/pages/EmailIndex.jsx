@@ -14,26 +14,20 @@ export function EmailIndex() {
     emailService.getFilterFromParams(searchParams)
   );
   useEffect(() => {
-    setSearchParams((prevSearchParams) => {
-      // persist previous search params
-      const searchParamsObj = {};
-      prevSearchParams.forEach((value, key) => (searchParamsObj[key] = value));
-
-      return {
-        ...searchParamsObj,
-        ...emailService.sentizeFilterBy(filterBy),
-      };
-    });
+    setSearchParams(emailService.sentizeFilterBy(filterBy));
     loadEmails();
   }, [filterBy]);
 
   useEffect(() => {
-    setFilterBy((filterBy) => ({ ...filterBy, folder: params.folder }));
+    onSetFilter(emailService.getDefaultFilter());
   }, [params.folder]);
 
   async function loadEmails() {
     try {
-      const emails = await emailService.query(filterBy);
+      const emails = await emailService.query({
+        ...filterBy,
+        folder: params.folder,
+      });
       setEmails(emails);
     } catch (error) {
       console.log('Error in load emails', error);

@@ -9,6 +9,7 @@ export const emailService = {
   sentizeFilterBy,
   getById,
   getDefaultEmail,
+  getDefaultFilter,
 };
 
 const STORAGE_KEY = 'emails';
