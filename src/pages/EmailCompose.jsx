@@ -33,6 +33,7 @@ export function EmailCompose({
       ev.preventDefault();
       await emailService.save(emailToEdit);
       onCloseCompose();
+      showSuccessMsg('Email Sent successfully');
       loadEmails();
     } catch (error) {
       console.log('Had Some issue saving email', emailToEdit);
