@@ -34,17 +34,21 @@ export function EmailNavbar({ setEmailComposeVisible }) {
   return (
     <nav className="email-navbar">
       <ul>
-        <button onClick={onComposeEmail}>
-          <PenIcon />
-          <span>Compose</span>
-        </button>
+        <div className="navbar-compose-btn-wrapper">
+          <button onClick={onComposeEmail}>
+            <PenIcon />
+          </button>
+        </div>
         {emailFolders.map((emailFolder) => {
           return (
-            <li key={emailFolder.label}>
-              <NavLink to={emailFolder.toUrl}>
-                {emailFolder.icon} {emailFolder.label}
-              </NavLink>
-            </li>
+            <NavLink
+              className="navbar-link-item"
+              to={emailFolder.toUrl}
+              key={emailFolder.label}
+            >
+              {emailFolder.icon}
+              {emailFolder.label}
+            </NavLink>
           );
         })}
       </ul>

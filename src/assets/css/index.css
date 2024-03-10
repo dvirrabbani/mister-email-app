@@ -12,6 +12,7 @@
 
 /* Components */
 @import './cmps/email-index-header.css';
+@import './cmps/email-navbar.css';
 @import './cmps/email-list-container.css';
 @import './cmps/email-list.css';
 @import './cmps/email-preview.css';

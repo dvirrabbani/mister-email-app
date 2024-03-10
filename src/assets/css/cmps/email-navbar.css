@@ -1,0 +1,46 @@
+.email-navbar ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0px 12px 0px 0px;
+}
+
+.email-navbar .navbar-compose-btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.email-navbar .navbar-compose-btn-wrapper button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 56px;
+  height: 56px;
+  flex-grow: 0;
+  border-radius: 16px;
+  justify-content: center;
+  background-color: #c2e7ff;
+}
+
+.email-navbar .navbar-compose-btn-wrapper button:hover {
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302),
+    0 4px 8px 3px rgba(60, 64, 67, 0.149);
+}
+
+.email-navbar .navbar-link-item {
+  border-radius: 0 16px 16px 0;
+  padding: 12px 12px 12px 12px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.email-navbar .navbar-link-item:hover:not(.active) {
+  background-color: #dadce0;
+}
+
+.email-navbar .navbar-link-item.active {
+  background-color: #d3e3fd;
+}
