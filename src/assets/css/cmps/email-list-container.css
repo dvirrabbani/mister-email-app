@@ -1,5 +1,4 @@
 .email-list-container {
-  border-radius: 16px;
   background-color: var(--white);
   display: grid;
   grid-template-rows: auto 1fr;
@@ -8,4 +7,5 @@
 
 .email-list-container > .email-list-header {
   min-height: 32px;
+  padding: 16px;
 }
