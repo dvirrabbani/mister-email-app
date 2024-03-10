@@ -1,25 +1,17 @@
-import { useEffect, useState } from 'react';
-
 export function EmailFilter({ filterBy, onSetFilter }) {
-  const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
-
-  useEffect(() => {
-    onSetFilter(filterByToEdit);
-  }, [filterByToEdit]);
-
   function handleChangeIsRead(ev) {
     let { value } = ev.target;
 
-    let filterValue = null;
+    let isRead = null;
     switch (value) {
       case 'read':
-        filterValue = true;
+        isRead = true;
         break;
       case 'unread':
-        filterValue = false;
+        isRead = false;
         break;
     }
-    setFilterByToEdit((prevFilter) => ({ ...prevFilter, isRead: filterValue }));
+    onSetFilter({ isRead });
   }
 
   function onSubmitFilter(ev) {
@@ -41,7 +33,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
   return (
     <form onSubmit={onSubmitFilter}>
       <select
-        value={mapIsReadToOptionValue(filterByToEdit.isRead)}
+        value={mapIsReadToOptionValue(filterBy.isRead)}
         name="isRead"
         onChange={handleChangeIsRead}
       >
