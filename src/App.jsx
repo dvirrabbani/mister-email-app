@@ -11,6 +11,8 @@ import { EmailIndex } from './pages/EmailIndex';
 import { EmailFolderList } from './pages/EmailFolderList';
 import { EmailDetails } from './cmps/EmailDetails';
 
+import { UserMsg } from './cmps/UserMsg';
+
 export function App() {
   return (
     <section className="main-app">
@@ -26,6 +28,7 @@ export function App() {
           </Route>
         </Routes>
       </Router>
+      <UserMsg />
     </section>
   );
 }
