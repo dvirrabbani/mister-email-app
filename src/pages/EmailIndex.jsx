@@ -22,6 +22,19 @@ export function EmailIndex() {
     onSetFilter(emailService.getDefaultFilter());
   }, [params.folder]);
 
+  useEffect(() => {
+    onChangeEmailCompose(searchParams);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!isComposeOpen) {
+      setSearchParams((prevSearchParams) => {
+        prevSearchParams.delete('compose');
+        return prevSearchParams;
+      });
+    }
+  }, [isComposeOpen]);
+
   async function loadEmails() {
     try {
       const emails = await emailService.query({
@@ -67,6 +80,11 @@ export function EmailIndex() {
     setIsComposeOpen(() => value);
   }
 
+  function onChangeEmailCompose(searchParams) {
+    const composeParam = searchParams.get('compose');
+    setEmailComposeVisible(composeParam === 'new');
+  }
+
   const { txt } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
@@ -84,11 +102,12 @@ export function EmailIndex() {
             params,
           }}
         />
-        <EmailCompose
-          loadEmails={loadEmails}
-          isComposeOpen={isComposeOpen}
-          setEmailComposeVisible={setEmailComposeVisible}
-        />
+        {isComposeOpen && (
+          <EmailCompose
+            loadEmails={loadEmails}
+            setEmailComposeVisible={setEmailComposeVisible}
+          />
+        )}
       </main>
       <aside className="addon-list-container"></aside>
     </section>

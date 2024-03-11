@@ -1,24 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { emailService } from '../services/email.service';
+import { useState } from 'react';
 import { MdClose as CloseIcon } from 'react-icons/md';
+import { emailService } from '../services/email.service';
 
-export function EmailCompose({
-  isComposeOpen,
-  setEmailComposeVisible,
-  loadEmails,
-}) {
-  const [searchParams] = useSearchParams();
+export function EmailCompose({ setEmailComposeVisible, loadEmails }) {
   const [emailToEdit, setEmailToEdit] = useState(
     emailService.getDefaultEmail()
   );
-
-  useEffect(() => {
-    const composeParam = searchParams.get('compose');
-    if (composeParam === 'new' && !isComposeOpen) {
-      setEmailComposeVisible(true);
-    }
-  }, [searchParams]);
 
   function handleChange(ev) {
     let { value, name: field } = ev.target;
@@ -42,10 +29,8 @@ export function EmailCompose({
 
   function onCloseCompose() {
     setEmailComposeVisible(false);
-    setEmailToEdit(emailService.getDefaultEmail());
   }
 
-  if (!isComposeOpen) return null;
   return (
     <div className="email-compose-container">
       <div className="email-compose">

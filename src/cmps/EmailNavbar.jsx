@@ -28,7 +28,6 @@ export function EmailNavbar({ setEmailComposeVisible }) {
 
   function onComposeEmail() {
     setSearchParams((prev) => ({ ...prev, compose: 'new' }));
-    setEmailComposeVisible(true);
   }
 
   return (
