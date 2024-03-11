@@ -57,7 +57,7 @@ function sentizeFilterBy(filterBy) {
 
 function getDefaultFilter() {
   return {
-    body: '',
+    txt: '',
     isRead: null,
     folder: 'inbox',
   };
@@ -89,7 +89,7 @@ function getDefaultEmail() {
 }
 
 function _filterEmailsBy(emails, filterBy) {
-  let { body = '', isRead = null, folder } = filterBy;
+  let { txt = '', isRead = null, folder } = filterBy;
 
   let filteredEmails = emails.filter((email) => {
     let filters = [];
@@ -98,8 +98,8 @@ function _filterEmailsBy(emails, filterBy) {
       filters.push(email.isRead === isRead);
     }
 
-    if (body) {
-      filters.push(email.body.toLowerCase().includes(body.toLowerCase()));
+    if (txt) {
+      filters.push(email.body.toLowerCase().includes(txt.toLowerCase()));
     }
 
     switch (folder) {

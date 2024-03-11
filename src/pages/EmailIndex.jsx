@@ -67,11 +67,11 @@ export function EmailIndex() {
     setIsComposeOpen(() => value);
   }
 
-  const { body } = filterBy;
+  const { txt } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
     <section className="email-index">
-      <EmailIndexHeader filterBy={{ body }} onSetFilter={onSetFilter} />
+      <EmailIndexHeader filterBy={{ txt }} onSetFilter={onSetFilter} />
       <EmailNavbar setEmailComposeVisible={setEmailComposeVisible} />
       <main className="email-index-main">
         <Outlet

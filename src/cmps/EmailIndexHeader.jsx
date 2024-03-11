@@ -35,8 +35,8 @@ export function EmailIndexHeader({ filterBy, onSetFilter }) {
         <input
           type="text"
           placeholder="Search mail"
-          name="body"
-          value={filterByToEdit.body}
+          name="txt"
+          value={filterByToEdit.txt}
           onChange={handleChange}
         />
       </form>
