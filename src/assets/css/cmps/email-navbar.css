@@ -1,7 +1,6 @@
 .email-navbar ul {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   padding: 0px 12px 0px 0px;
 }
 
