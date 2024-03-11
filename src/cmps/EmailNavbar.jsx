@@ -27,7 +27,10 @@ export function EmailNavbar() {
   ];
 
   function onComposeEmail() {
-    setSearchParams((prev) => ({ ...prev, compose: 'new' }));
+    setSearchParams((prevSearchParams) => {
+      prevSearchParams.set('compose', 'new');
+      return prevSearchParams;
+    });
   }
 
   return (
