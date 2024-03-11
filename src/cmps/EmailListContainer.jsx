@@ -5,17 +5,16 @@ import {
   MdMarkunread as UnReadIcon,
   MdOutlineMarkEmailRead as ReadIcon,
 } from 'react-icons/md';
+import { useOutletContext } from 'react-router-dom';
 
 import { EmailFilter } from './EmailFilter';
 import { EmailPreview } from './EmailPreview';
 
-export function EmailListContainer({
-  emails,
-  onRemoveEmail,
-  onUpdateEmail,
-  filterBy,
-  onSetFilter,
-}) {
+export function EmailListContainer() {
+  const context = useOutletContext();
+  const { emails, filterBy, onSetFilter, onRemoveEmail, onUpdateEmail } =
+    context;
+
   function onChangeEmailRead(email) {
     const newEmail = { ...email, isRead: !email.isRead };
     onUpdateEmail(newEmail);
