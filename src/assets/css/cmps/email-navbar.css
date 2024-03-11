@@ -7,6 +7,7 @@
 .email-navbar .navbar-compose-btn-wrapper {
   display: flex;
   justify-content: center;
+  padding: 8px;
 }
 
 .email-navbar .navbar-compose-btn-wrapper button {
