@@ -3,6 +3,7 @@ import {
   MdAllInbox as InboxIcon,
   MdOutlineStarBorder as StarIcon,
   MdOutlineForwardToInbox as SentIcon,
+  MdDeleteOutline as TrashIcon,
 } from 'react-icons/md';
 import { BsPen as PenIcon } from 'react-icons/bs';
 
@@ -23,6 +24,11 @@ export function EmailNavbar() {
       label: 'Sent',
       icon: <SentIcon />,
       toUrl: '/email/sent',
+    },
+    {
+      label: 'Trash',
+      icon: <TrashIcon />,
+      toUrl: '/email/trash',
     },
   ];
 
