@@ -109,9 +109,16 @@ function _filterEmailsBy(emails, filterBy) {
       case 'sent':
         filters.push(email.from === loggedinUser.email);
         break;
+      case 'trash':
+        filters.push(email.removedAt);
+        break;
       case 'starred':
         filters.push(email.isStarred);
         break;
+    }
+
+    if (folder !== 'trash') {
+      filters.push(email.removedAt === null);
     }
 
     const isFiltersMatched = filters.every((filter) => Boolean(filter));
@@ -138,8 +145,14 @@ function _createEmails() {
         body: utilService.getRandomValue(bodyList),
         isRead: utilService.getRandomValue(booleanValuesWithNullList),
         isStarred: utilService.getRandomValue(booleanValuesList),
-        sentAt: +utilService.getRandomTimestampIn24Hours(),
-        removedAt: utilService.getRandomValue(booleanValuesWithNullList),
+        sentAt: utilService.getRandomValue([
+          null,
+          utilService.getRandomTimestampIn24Hours(),
+        ]),
+        removedAt: utilService.getRandomValue([
+          null,
+          utilService.getRandomTimestampIn24Hours(),
+        ]),
         from: utilService.getRandomValue(contactList),
         to: utilService.getRandomValue(contactList),
       };
