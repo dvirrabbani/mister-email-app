@@ -9,5 +9,6 @@
 
   /* elements */
   --mail-page-header-height: 55px;
-  --mail-page-layout-grid-gap: 6px;
+  --mail-navbar-link-list-padding-end: 12px;
+  --mail-navbar-max-width: 256px;
 }
