@@ -6,7 +6,7 @@
 .email-list .email-item {
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 16px;
   padding: 10px 13px;
@@ -26,5 +26,12 @@
 .email-list .email-item .actions-buttons {
   display: flex;
   align-items: center;
-  gap: 8px;
+}
+
+.email-list .email-item > button {
+  color: #202124;
+}
+
+.email-list .email-item .actions-buttons > button > svg {
+  width: 20px;
 }
