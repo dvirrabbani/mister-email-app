@@ -1,10 +1,8 @@
-import {
-  MdOutlineStarBorder as StarIconOutlineIcon,
-  MdOutlineStar as StarIconIcon,
-  MdDelete as DeleteIcon,
-  MdMarkunread as UnReadIcon,
-  MdOutlineMarkEmailRead as ReadIcon,
-} from 'react-icons/md';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
+import DraftsIcon from '@mui/icons-material/Drafts';
 
 import { EmailPreview } from './EmailPreview';
 
@@ -33,10 +31,10 @@ export function EmailList({ emails, onUpdateEmail, onRemoveEmail }) {
                 onChangeEmailStarred(email);
               }}
             >
-              {email.isStarred ? <StarIconIcon /> : <StarIconOutlineIcon />}
+              {email.isStarred ? <StarIcon /> : <StarBorderIcon />}
             </button>
             <button onClick={() => onChangeEmailRead(email)}>
-              {email.isRead ? <ReadIcon /> : <UnReadIcon />}
+              {email.isRead ? <MarkEmailUnreadIcon /> : <DraftsIcon />}
             </button>
             <button onClick={() => onRemoveEmail(email.id)}>
               <DeleteIcon />

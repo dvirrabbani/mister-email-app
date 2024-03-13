@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { eventBusService } from './../services/event-bus.service';
-import { MdClose as CloseIcon } from 'react-icons/md';
+import CloseIcon from '@mui/icons-material/Close';
 
 export function UserMsg() {
   const [msg, setMsg] = useState(null);

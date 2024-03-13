@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { MdArrowBack as BackIcon } from 'react-icons/md';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import { emailService } from '../services/email.service';
 
 export function EmailDetails() {
@@ -28,7 +28,7 @@ export function EmailDetails() {
   return (
     <section className="email-details">
       <Link to={`/email/${params.folder}`}>
-        <BackIcon />
+        <ArrowBackOutlinedIcon />
       </Link>
       <h3 className="title">{email.subject}</h3>
       <div className="info">

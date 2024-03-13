@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MdClose as CloseIcon } from 'react-icons/md';
+import CloseIcon from '@mui/icons-material/Close';
 import { emailService } from '../services/email.service';
 
 export function EmailCompose({ setEmailComposeVisible, loadEmails }) {

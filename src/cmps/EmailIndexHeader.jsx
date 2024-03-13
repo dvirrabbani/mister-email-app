@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { AiOutlineSearch as SearchIcon } from 'react-icons/ai';
-import { BsFillQuestionCircleFill as SupportIcon } from 'react-icons/bs';
-import { BsGearFill as SettingIcon } from 'react-icons/bs';
-import { BsFillGrid3X3GapFill as GridIcon } from 'react-icons/bs';
-import { MdMenu as MenuIcon } from 'react-icons/md';
+import SearchIcon from '@mui/icons-material/Search';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import AppsIcon from '@mui/icons-material/Apps';
+import SettingsIcon from '@mui/icons-material/Settings';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import logoImgUrl from '../assets/imgs/logo_gmail.png';
 
@@ -42,13 +42,13 @@ export function EmailIndexHeader({ filterBy, onSetFilter }) {
       </form>
       <div className="user-preferences-bar">
         <button>
-          <SupportIcon />
+          <HelpOutlineIcon />
         </button>
         <button>
-          <SettingIcon />
+          <SettingsIcon />
         </button>
         <button>
-          <GridIcon />
+          <AppsIcon />
         </button>
         <Link to={'#'} className="profile-logo">
           <span>D</span>

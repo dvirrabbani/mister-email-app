@@ -1,11 +1,10 @@
 import { NavLink, useSearchParams } from 'react-router-dom';
-import {
-  MdAllInbox as InboxIcon,
-  MdOutlineStarBorder as StarIcon,
-  MdOutlineForwardToInbox as SentIcon,
-  MdDeleteOutline as TrashIcon,
-} from 'react-icons/md';
-import { BsPen as PenIcon } from 'react-icons/bs';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
+import InboxIcon from '@mui/icons-material/Inbox';
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 export function EmailNavbar() {
   const [, setSearchParams] = useSearchParams();
@@ -17,17 +16,17 @@ export function EmailNavbar() {
     },
     {
       label: 'Starred',
-      icon: <StarIcon />,
+      icon: <StarBorderIcon />,
       toUrl: '/email/starred',
     },
     {
       label: 'Sent',
-      icon: <SentIcon />,
+      icon: <SendOutlinedIcon />,
       toUrl: '/email/sent',
     },
     {
       label: 'Trash',
-      icon: <TrashIcon />,
+      icon: <DeleteOutlineOutlinedIcon />,
       toUrl: '/email/trash',
     },
   ];
@@ -44,7 +43,7 @@ export function EmailNavbar() {
       <ul>
         <div className="navbar-compose-btn-wrapper">
           <button onClick={onComposeEmail}>
-            <PenIcon />
+            <CreateOutlinedIcon />
           </button>
         </div>
         {emailFolders.map((emailFolder) => {
