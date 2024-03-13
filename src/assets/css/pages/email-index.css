@@ -7,7 +7,7 @@
     'h h h'
     'n m a';
   background-color: var(--bgColor1);
-  row-gap: 8px;
+  row-gap: var(--mail-page-layout-row-gap);
 }
 
 .email-index > *:not(.email-index-main) {
@@ -28,8 +28,7 @@
   position: relative;
   grid-area: m;
   height: calc(
-    100vh - var(--mail-page-header-height) - var(--mail-page-layout-grid-gap) *
-      2
+    100vh - var(--mail-page-header-height) - var(--mail-page-layout-row-gap) * 2
   );
   background-color: var(--white);
   border-radius: 16px;
