@@ -8,7 +8,7 @@ import {
 
 import { EmailPreview } from './EmailPreview';
 
-export function EmailList({ emails, onUpdateEmail }) {
+export function EmailList({ emails, onUpdateEmail, onRemoveEmail }) {
   function onChangeEmailRead(email) {
     const newEmail = { ...email, isRead: !email.isRead };
     onUpdateEmail(newEmail);
