@@ -48,14 +48,23 @@ export function EmailIndex() {
   }
 
   async function onRemoveEmail(emailId) {
-    console.log('remove');
     try {
-      await emailService.remove(emailId);
-      setEmails((prevEmails) =>
-        prevEmails.filter((currEmail) => currEmail.id !== emailId)
-      );
+      let emailToRemove = emails.find((email) => email.id === emailId);
+
+      if (params.folder === 'trash') {
+        await emailService.remove(emailId);
+      } else {
+        await emailService.save({
+          ...emailToRemove,
+          removedAt: new Date().getTime(),
+        });
+      }
+
+      setEmails((prevEmails) => {
+        return prevEmails.filter((currEmail) => currEmail.id !== emailId);
+      });
     } catch (err) {
-      console.log('Error in update email', err);
+      console.log('Error in Remove email', err);
     }
   }
 
@@ -72,6 +81,8 @@ export function EmailIndex() {
     }
   }
 
+  console.log(emails);
+
   function onSetFilter(fieldsToUpdate) {
     setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }));
   }
@@ -85,6 +96,7 @@ export function EmailIndex() {
     setEmailComposeVisible(composeParam === 'new');
   }
 
+  console.log(emails);
   const { txt } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
