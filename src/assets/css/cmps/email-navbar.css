@@ -1,25 +1,33 @@
+.email-navbar {
+  width: 256px;
+}
+
 .email-navbar ul {
   display: flex;
   flex-direction: column;
-  padding: 0px 12px 0px 0px;
+  padding: 0px var(--mail-navbar-link-list-padding-end) 0px 0px;
 }
 
+.email-navbar .navbar-compose-btn-wrapper .navbar-compose-btn-icon-wrapper {
+  width: 56px;
+}
 .email-navbar .navbar-compose-btn-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   padding: 8px;
 }
 
 .email-navbar .navbar-compose-btn-wrapper button {
   display: flex;
   align-items: center;
-  gap: 8px;
   min-width: 56px;
   height: 56px;
   flex-grow: 0;
   border-radius: 16px;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #c2e7ff;
+  color: #001d35;
+  padding-inline-end: 24px;
 }
 
 .email-navbar .navbar-compose-btn-wrapper button:hover {
@@ -28,13 +36,16 @@
 }
 
 .email-navbar .navbar-link-item {
+  height: 32px;
+  padding: 0 12px 0 26px;
   border-radius: 0 16px 16px 0;
-  padding: 12px 12px 12px 12px;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 8px;
+  font-size: 0.875rem;
+  color: #202124;
 }
 
 .email-navbar .navbar-link-item:hover:not(.active) {
@@ -43,4 +54,12 @@
 
 .email-navbar .navbar-link-item.active {
   background-color: #d3e3fd;
+  color: #001d35;
+  font-weight: bold;
+}
+
+.email-navbar .navbar-link-item > svg {
+  height: 20px;
+  width: 20px;
+  margin-inline-end: 20px;
 }
