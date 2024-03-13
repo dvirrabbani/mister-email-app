@@ -81,8 +81,6 @@ export function EmailIndex() {
     }
   }
 
-  console.log(emails);
-
   function onSetFilter(fieldsToUpdate) {
     setFilterBy((prevFilterBy) => ({ ...prevFilterBy, ...fieldsToUpdate }));
   }
@@ -96,7 +94,6 @@ export function EmailIndex() {
     setEmailComposeVisible(composeParam === 'new');
   }
 
-  console.log(emails);
   const { txt } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
