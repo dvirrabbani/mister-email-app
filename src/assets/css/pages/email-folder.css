@@ -1,0 +1,11 @@
+.email-folder {
+  background-color: var(--white);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.email-folder > .email-folder-header {
+  min-height: 32px;
+  padding: 16px;
+}

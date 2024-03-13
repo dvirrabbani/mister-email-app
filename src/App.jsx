@@ -5,12 +5,13 @@ import {
   Routes,
 } from 'react-router-dom';
 
+// Pages
 import { Home } from './pages/Home';
 import { AboutUs } from './pages/AboutUs';
 import { EmailIndex } from './pages/EmailIndex';
-
-import { EmailDetails } from './cmps/EmailDetails';
-import { EmailListContainer } from './cmps/EmailListContainer';
+import { EmailFolder } from './pages/EmailFolder';
+import { EmailDetails } from './pages/EmailDetails';
+// Components
 import { UserMsg } from './cmps/UserMsg';
 
 export function App() {
@@ -23,7 +24,7 @@ export function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/email" element={<EmailIndex />}>
             <Route index element={<Navigate to={'/email/inbox'} />} />
-            <Route path="/email/:folder" element={<EmailListContainer />} />
+            <Route path="/email/:folder" element={<EmailFolder />} />
             <Route path="/email/:folder/:emailId" element={<EmailDetails />} />
           </Route>
         </Routes>
