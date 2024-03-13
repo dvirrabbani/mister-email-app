@@ -3,11 +3,11 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
-  gap: var(--mail-page-layout-grid-gap);
   grid-template-areas:
     'h h h'
     'n m a';
   background-color: var(--bgColor1);
+  row-gap: 8px;
 }
 
 .email-index > *:not(.email-index-main) {
