@@ -88,42 +88,39 @@ function getDefaultEmail() {
   };
 }
 
+function _filterEmailsByFolder(emails, folder) {
+  if (folder !== 'trash') emails = emails.filter((email) => !email.removedAt);
+
+  switch (folder) {
+    case 'inbox':
+      return emails.filter((email) => email.to === loggedinUser.email);
+    case 'sent':
+      return emails.filter((email) => email.from === loggedinUser.email);
+    case 'trash':
+      return emails.filter((email) => email.removedAt);
+    case 'starred':
+      return emails.filter((email) => email.isStarred);
+    default:
+      return emails;
+  }
+}
+
 function _filterEmailsBy(emails, filterBy) {
   let { txt = '', isRead = null, folder } = filterBy;
+  const regexTxtTerm = new RegExp(txt, 'i');
+  let filteredEmails = [];
 
-  let filteredEmails = emails.filter((email) => {
-    let filters = [];
+  filteredEmails = _filterEmailsByFolder(emails, folder);
 
-    if (isRead !== null) {
-      filters.push(email.isRead === isRead);
-    }
+  if (isRead !== null) {
+    filteredEmails = filteredEmails.filter((email) => email.isRead === isRead);
+  }
 
-    if (txt) {
-      filters.push(email.body.toLowerCase().includes(txt.toLowerCase()));
-    }
-
-    switch (folder) {
-      case 'inbox':
-        filters.push(email.to === loggedinUser.email);
-        break;
-      case 'sent':
-        filters.push(email.from === loggedinUser.email);
-        break;
-      case 'trash':
-        filters.push(email.removedAt);
-        break;
-      case 'starred':
-        filters.push(email.isStarred);
-        break;
-    }
-
-    if (folder !== 'trash') {
-      filters.push(email.removedAt === null);
-    }
-
-    const isFiltersMatched = filters.every((filter) => Boolean(filter));
-    return isFiltersMatched;
-  });
+  if (txt) {
+    filteredEmails = filteredEmails.filter((email) => {
+      return regexTxtTerm.test(email.body);
+    });
+  }
 
   return filteredEmails;
 }
