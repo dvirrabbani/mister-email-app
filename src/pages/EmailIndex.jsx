@@ -10,6 +10,9 @@ export function EmailIndex() {
   const [emails, setEmails] = useState(null);
   const params = useParams();
   const [isComposeOpen, setIsComposeOpen] = useState(false);
+  const [composeEmail, setComposeEmail] = useState(
+    emailService.getDefaultEmail()
+  );
   const [filterBy, setFilterBy] = useState(
     emailService.getFilterFromParams(searchParams)
   );
@@ -91,7 +94,15 @@ export function EmailIndex() {
 
   function onChangeEmailCompose(searchParams) {
     const composeParam = searchParams.get('compose');
-    setEmailComposeVisible(composeParam === 'new');
+    if (composeParam && !composeParam === 'new') {
+      const defaultEmail = emailService.getDefaultEmail();
+      const composeEmailToUpdate = {};
+      for (const [key, value] of Object.entries(defaultEmail)) {
+        composeEmailToUpdate[key] = searchParams.get(key) || value;
+      }
+      setComposeEmail(() => composeEmailToUpdate);
+    }
+    setEmailComposeVisible(composeParam);
   }
 
   const { txt } = filterBy;
@@ -100,7 +111,7 @@ export function EmailIndex() {
     <section className="email-index">
       <EmailIndexHeader filterBy={{ txt }} onSetFilter={onSetFilter} />
       <EmailNavbar setEmailComposeVisible={setEmailComposeVisible} />
-      <main className="email-index-main">
+      <main className="email-index-content">
         <Outlet
           context={{
             emails,
@@ -115,6 +126,7 @@ export function EmailIndex() {
           <EmailCompose
             loadEmails={loadEmails}
             setEmailComposeVisible={setEmailComposeVisible}
+            composeEmail={composeEmail}
           />
         )}
       </main>

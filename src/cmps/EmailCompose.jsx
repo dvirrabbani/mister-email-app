@@ -2,9 +2,13 @@ import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { emailService } from '../services/email.service';
 
-export function EmailCompose({ setEmailComposeVisible, loadEmails }) {
+export function EmailCompose({
+  composeEmail,
+  setEmailComposeVisible,
+  loadEmails,
+}) {
   const [emailToEdit, setEmailToEdit] = useState(
-    emailService.getDefaultEmail()
+    composeEmail || emailService.getDefaultEmail()
   );
 
   function handleChange(ev) {
@@ -46,18 +50,21 @@ export function EmailCompose({ setEmailComposeVisible, loadEmails }) {
             name="to"
             type="email"
             placeholder="To"
+            value={emailToEdit.to}
           />
           <input
             onChange={handleChange}
             name="subject"
             type="text"
             placeholder="Subject"
+            value={emailToEdit.subject}
           />
           <textarea
             onChange={handleChange}
             name="body"
             type="text"
             placeholder="Content"
+            value={emailToEdit.body}
           />
           <footer>
             <button className="submit-btn">Send</button>
