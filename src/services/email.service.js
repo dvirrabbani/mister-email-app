@@ -97,19 +97,27 @@ function _filterEmailsBy(emails, filterBy) {
     // First prioritize
     case 'trash':
       filteredEmails = emails.filter((email) => email.removedAt);
+      break;
     case 'drafts':
       filteredEmails = emails.filter((email) => !email.sentAt);
+      break;
     // Secondary prioritize
     case 'inbox':
       filteredEmails = emails.filter(
         (email) => email.to === loggedinUser.email
       );
+      break;
     case 'sent':
       filteredEmails = emails.filter(
         (email) => email.from === loggedinUser.email
       );
+      break;
     case 'starred':
       filteredEmails = emails.filter((email) => email.isStarred);
+      break;
+    default:
+      filteredEmails = emails;
+      break;
   }
 
   if (isRead !== null) {
