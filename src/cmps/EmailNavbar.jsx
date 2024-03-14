@@ -4,6 +4,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 
 export function EmailNavbar() {
   const [, setSearchParams] = useSearchParams();
@@ -27,6 +28,11 @@ export function EmailNavbar() {
       label: 'Trash',
       icon: <DeleteOutlineOutlinedIcon />,
       toUrl: '/email/trash',
+    },
+    {
+      label: 'Drafts',
+      icon: <DescriptionOutlinedIcon />,
+      toUrl: '/email/drafts',
     },
   ];
 
