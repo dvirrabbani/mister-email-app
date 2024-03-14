@@ -88,29 +88,29 @@ function getDefaultEmail() {
   };
 }
 
-function _filterEmailsByFolder(emails, folder) {
-  if (folder !== 'trash') emails = emails.filter((email) => !email.removedAt);
-
-  switch (folder) {
-    case 'inbox':
-      return emails.filter((email) => email.to === loggedinUser.email);
-    case 'sent':
-      return emails.filter((email) => email.from === loggedinUser.email);
-    case 'trash':
-      return emails.filter((email) => email.removedAt);
-    case 'starred':
-      return emails.filter((email) => email.isStarred);
-    default:
-      return emails;
-  }
-}
-
 function _filterEmailsBy(emails, filterBy) {
   let { txt = '', isRead = null, folder } = filterBy;
   const regexTxtTerm = new RegExp(txt, 'i');
   let filteredEmails = [];
 
-  filteredEmails = _filterEmailsByFolder(emails, folder);
+  switch (folder) {
+    // First prioritize
+    case 'trash':
+      filteredEmails = emails.filter((email) => email.removedAt);
+    case 'drafts':
+      filteredEmails = emails.filter((email) => !email.sentAt);
+    // Secondary prioritize
+    case 'inbox':
+      filteredEmails = emails.filter(
+        (email) => email.to === loggedinUser.email
+      );
+    case 'sent':
+      filteredEmails = emails.filter(
+        (email) => email.from === loggedinUser.email
+      );
+    case 'starred':
+      filteredEmails = emails.filter((email) => email.isStarred);
+  }
 
   if (isRead !== null) {
     filteredEmails = filteredEmails.filter((email) => email.isRead === isRead);
