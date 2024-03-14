@@ -10,7 +10,7 @@
   row-gap: var(--mail-page-layout-row-gap);
 }
 
-.email-index > *:not(.email-index-main) {
+.email-index > *:not(.email-index-content) {
   /* border: 1px solid black; */
 }
 
@@ -24,7 +24,7 @@
   grid-area: n;
 }
 
-.email-index > .email-index-main {
+.email-index > .email-index-content {
   position: relative;
   grid-area: m;
   height: calc(
