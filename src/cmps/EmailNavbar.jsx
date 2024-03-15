@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import InboxIcon from '@mui/icons-material/Inbox';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -6,10 +7,11 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 
-export function EmailNavbar() {
+export function EmailNavbar({ unreadEmailsCount }) {
   const [, setSearchParams] = useSearchParams();
-  const emailFolders = [
+  const [emailFolders, setEmailFolders] = useState([
     {
+      key: 'inbox',
       label: 'Inbox',
       icon: <InboxIcon />,
       toUrl: '/email/inbox',
@@ -30,11 +32,25 @@ export function EmailNavbar() {
       toUrl: '/email/trash',
     },
     {
+      key: 'drafts',
       label: 'Drafts',
       icon: <DescriptionOutlinedIcon />,
       toUrl: '/email/drafts',
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    if (unreadEmailsCount.inbox) {
+      setEmailFolders((prevEmailFolders) =>
+        prevEmailFolders.map((folder) => {
+          if (unreadEmailsCount[folder.key]) {
+            folder.unreadCount = unreadEmailsCount[folder.key];
+          }
+          return folder;
+        })
+      );
+    }
+  }, [unreadEmailsCount]);
 
   function onComposeEmail() {
     setSearchParams((prevSearchParams) => {
@@ -63,6 +79,9 @@ export function EmailNavbar() {
             >
               {emailFolder.icon}
               {emailFolder.label}
+              {emailFolder.unreadCount && (
+                <span>{emailFolder.unreadCount}</span>
+              )}
             </NavLink>
           );
         })}

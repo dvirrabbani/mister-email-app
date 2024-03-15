@@ -10,15 +10,18 @@ export function EmailIndex() {
   const [emails, setEmails] = useState(null);
   const params = useParams();
   const [isComposeOpen, setIsComposeOpen] = useState(false);
+  const [unreadEmailsCount, setUnreadEmailsCount] = useState({});
   const [composeEmail, setComposeEmail] = useState(
     emailService.getDefaultEmail()
   );
   const [filterBy, setFilterBy] = useState(
     emailService.getFilterFromParams(searchParams)
   );
+
   useEffect(() => {
     setSearchParams(emailService.sentizeFilterBy(filterBy));
     loadEmails();
+    loadUnreadEmails();
   }, [filterBy]);
 
   useEffect(() => {
@@ -48,6 +51,11 @@ export function EmailIndex() {
     } catch (error) {
       console.log('Error in load emails', error);
     }
+  }
+
+  async function loadUnreadEmails() {
+    const unreadEmails = await emailService.getUnreadEmailsCount();
+    setUnreadEmailsCount(() => unreadEmails);
   }
 
   async function onRemoveEmail(emailId) {
@@ -110,7 +118,10 @@ export function EmailIndex() {
   return (
     <section className="email-index">
       <EmailIndexHeader filterBy={{ txt }} onSetFilter={onSetFilter} />
-      <EmailNavbar setEmailComposeVisible={setEmailComposeVisible} />
+      <EmailNavbar
+        setEmailComposeVisible={setEmailComposeVisible}
+        unreadEmailsCount={unreadEmailsCount}
+      />
       <main className="email-index-content">
         <Outlet
           context={{
