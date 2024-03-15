@@ -12,6 +12,7 @@ export const emailService = {
   getDefaultFilter,
   send,
   saveDraft,
+  getUnreadEmailsCount,
 };
 
 const STORAGE_KEY = 'emails';
@@ -107,6 +108,20 @@ function getDefaultEmail() {
   };
 }
 
+async function getUnreadEmailsCount() {
+  let emails = await storageService.query(STORAGE_KEY);
+  const unreadEmailsCount = {
+    inbox: emails.filter(
+      (email) =>
+        email.to === loggedinUser.email &&
+        email.sentAt &&
+        !email.removedAt &&
+        !email.isRead
+    ).length,
+  };
+  return unreadEmailsCount;
+}
+
 function _filterEmailsBy(emails, filterBy) {
   let { txt = '', isRead = null, folder } = filterBy;
   const regexTxtTerm = new RegExp(txt, 'i');
@@ -120,19 +135,22 @@ function _filterEmailsBy(emails, filterBy) {
     case 'drafts':
       filteredEmails = emails.filter((email) => !email.sentAt);
       break;
-    // Secondary prioritize
     case 'inbox':
       filteredEmails = emails.filter(
-        (email) => email.to === loggedinUser.email && email.sentAt
+        (email) =>
+          email.to === loggedinUser.email && email.sentAt && !email.removedAt
       );
       break;
     case 'sent':
       filteredEmails = emails.filter(
-        (email) => email.from === loggedinUser.email && email.sentAt
+        (email) =>
+          email.from === loggedinUser.email && email.sentAt && !email.removedAt
       );
       break;
     case 'starred':
-      filteredEmails = emails.filter((email) => email.isStarred);
+      filteredEmails = emails.filter(
+        (email) => email.isStarred && !email.removedAt
+      );
       break;
     default:
       filteredEmails = emails;
