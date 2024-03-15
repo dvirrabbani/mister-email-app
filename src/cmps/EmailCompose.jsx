@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { emailService } from '../services/email.service';
+import { useEffectUpdate } from '../customHooks/useEffectUpdate';
 
 export function EmailCompose({
   composeEmail,
@@ -10,6 +11,27 @@ export function EmailCompose({
   const [emailToEdit, setEmailToEdit] = useState(
     composeEmail || emailService.getDefaultEmail()
   );
+
+  const draftTimeoutRef = useRef();
+  const savedToDraftDuration = 5000;
+
+  useEffectUpdate(() => {
+    if (!emailToEdit.id) {
+      draftTimeoutRef.current = setInterval(() => {
+        handleEmailComposeChange(emailToEdit);
+        loadEmails();
+      }, savedToDraftDuration);
+    }
+
+    return () => {
+      clearInterval(draftTimeoutRef.current);
+    };
+  }, [emailToEdit]);
+
+  async function handleEmailComposeChange(emailToEdit) {
+    const draft = await emailService.saveDraft(emailToEdit);
+    setEmailToEdit(draft);
+  }
 
   function handleChange(ev) {
     let { value, name: field } = ev.target;
@@ -22,7 +44,7 @@ export function EmailCompose({
   async function onSaveEmail(ev) {
     try {
       ev.preventDefault();
-      await emailService.save(emailToEdit);
+      await emailService.send(emailToEdit);
       onCloseCompose();
       showSuccessMsg('Email Sent successfully');
       loadEmails();
