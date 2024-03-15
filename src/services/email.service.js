@@ -118,6 +118,11 @@ async function getUnreadEmailsCount() {
         !email.removedAt &&
         !email.isRead
     ).length,
+
+    drafts: emails.filter(
+      (email) =>
+        email.from === loggedinUser.email && !email.sentAt && !email.removedAt
+    ).length,
   };
   return unreadEmailsCount;
 }
@@ -128,12 +133,14 @@ function _filterEmailsBy(emails, filterBy) {
   let filteredEmails = [];
 
   switch (folder) {
-    // First prioritize
     case 'trash':
       filteredEmails = emails.filter((email) => email.removedAt);
       break;
     case 'drafts':
-      filteredEmails = emails.filter((email) => !email.sentAt);
+      filteredEmails = emails.filter(
+        (email) =>
+          !email.sentAt && !email.removedAt && email.from === loggedinUser.email
+      );
       break;
     case 'inbox':
       filteredEmails = emails.filter(
@@ -187,10 +194,7 @@ function _createEmails() {
         body: utilService.getRandomValue(bodyList),
         isRead: utilService.getRandomValue(booleanValuesWithNullList),
         isStarred: utilService.getRandomValue(booleanValuesList),
-        sentAt: utilService.getRandomValue([
-          null,
-          utilService.getRandomTimestampIn24Hours(),
-        ]),
+        sentAt: utilService.getRandomTimestampIn24Hours(),
         removedAt: utilService.getRandomValue([
           null,
           utilService.getRandomTimestampIn24Hours(),
