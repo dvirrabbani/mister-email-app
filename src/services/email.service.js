@@ -10,6 +10,8 @@ export const emailService = {
   getById,
   getDefaultEmail,
   getDefaultFilter,
+  send,
+  saveDraft,
 };
 
 const STORAGE_KEY = 'emails';
@@ -35,13 +37,30 @@ async function save(emailToSave) {
   if (emailToSave.id) {
     return storageService.put(STORAGE_KEY, emailToSave);
   } else {
-    emailToSave.isRead = null;
-    emailToSave.isStarred = false;
-    emailToSave.sentAt = new Date().getTime();
-    emailToSave.removedAt = null;
-    emailToSave.from = loggedinUser.email;
     return storageService.post(STORAGE_KEY, emailToSave);
   }
+}
+
+async function send(emailToSave) {
+  emailToSave.from = loggedinUser.email;
+  emailToSave.sentAt = new Date().getTime();
+  emailToSave.removedAt = null;
+  emailToSave.isRead = null;
+  emailToSave.removedAt = null;
+  emailToSave.isStarred = false;
+  return save(emailToSave);
+}
+
+async function saveDraft(emailToSave) {
+  if (!emailToSave.id) {
+    emailToSave.from = loggedinUser.email;
+    emailToSave.sentAt = null;
+    emailToSave.removedAt = null;
+    emailToSave.isRead = null;
+    emailToSave.removedAt = null;
+    emailToSave.isStarred = false;
+  }
+  return save(emailToSave);
 }
 
 function sentizeFilterBy(filterBy) {
@@ -104,12 +123,12 @@ function _filterEmailsBy(emails, filterBy) {
     // Secondary prioritize
     case 'inbox':
       filteredEmails = emails.filter(
-        (email) => email.to === loggedinUser.email
+        (email) => email.to === loggedinUser.email && email.sentAt
       );
       break;
     case 'sent':
       filteredEmails = emails.filter(
-        (email) => email.from === loggedinUser.email
+        (email) => email.from === loggedinUser.email && email.sentAt
       );
       break;
     case 'starred':
