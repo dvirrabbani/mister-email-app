@@ -35,7 +35,7 @@
   overflow: hidden;
 }
 
-.email-index > .addon-list-container {
-  width: 100px;
+.email-index > .email-index-aside {
+  width: 60px;
   grid-area: a;
 }
