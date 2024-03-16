@@ -3,6 +3,7 @@ import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { emailService } from '../services/email.service';
 import { EmailIndexHeader } from '../cmps/EmailIndexHeader';
 import { EmailNavbar } from '../cmps/EmailNavbar';
+import { AddonList } from '../cmps/AddonList';
 import { EmailCompose } from '../cmps/EmailCompose';
 
 export function EmailIndex() {
@@ -141,7 +142,9 @@ export function EmailIndex() {
           />
         )}
       </main>
-      <aside className="addon-list-container"></aside>
+      <aside className="email-index-aside">
+        <AddonList />
+      </aside>
     </section>
   );
 }
