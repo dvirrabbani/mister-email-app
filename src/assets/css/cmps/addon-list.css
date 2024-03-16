@@ -1,0 +1,20 @@
+.addon-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  .addon-item {
+    padding: 2px;
+  }
+
+  button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      padding: 2px;
+    }
+  }
+}

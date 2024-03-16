@@ -15,6 +15,7 @@
 /* Components */
 @import './cmps/email-index-header.css';
 @import './cmps/email-navbar.css';
+@import './cmps/addon-list.css';
 @import './cmps/email-list.css';
 @import './cmps/email-preview.css';
 @import './cmps/email-compose.css';
