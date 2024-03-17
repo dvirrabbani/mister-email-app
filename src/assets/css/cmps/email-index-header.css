@@ -34,6 +34,7 @@
 
 .email-index-header .search-bar input {
   border: none;
+  width: 100%;
   background-color: inherit;
   outline: none;
 }
