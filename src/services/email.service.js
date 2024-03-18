@@ -1,5 +1,5 @@
-import { utilService } from './util.service';
-import { storageService } from './async-storage.service';
+import { utilService } from "./util.service";
+import { storageService } from "./async-storage.service";
 
 export const emailService = {
   query,
@@ -15,8 +15,8 @@ export const emailService = {
   getUnreadEmailsCount,
 };
 
-const STORAGE_KEY = 'emails';
-const loggedinUser = { email: 'user@appsus.com', fullname: 'Mahatma Appsus' };
+const STORAGE_KEY = "emails";
+const loggedinUser = { email: "user@appsus.com", fullname: "Mahatma Appsus" };
 
 _createEmails();
 
@@ -68,7 +68,7 @@ function sentizeFilterBy(filterBy) {
   const senitizedFilterBy = { ...filterBy };
 
   for (const [field, value] of Object.entries(filterBy)) {
-    if (value === '' || value === null || field === 'folder') {
+    if (value === "" || value === null || field === "folder") {
       delete senitizedFilterBy[field];
     }
   }
@@ -77,9 +77,9 @@ function sentizeFilterBy(filterBy) {
 
 function getDefaultFilter() {
   return {
-    txt: '',
+    txt: "",
     isRead: null,
-    folder: 'inbox',
+    folder: "inbox",
   };
 }
 
@@ -89,9 +89,9 @@ function getFilterFromParams(searchParams) {
 
   for (const field in defaultFilter) {
     const searchParamValue = searchParams.get(field);
-    if (searchParamValue === 'false') {
+    if (searchParamValue === "false") {
       filterBy[field] = false;
-    } else if (searchParamValue === 'true') {
+    } else if (searchParamValue === "true") {
       filterBy[field] = true;
     } else {
       filterBy[field] = searchParamValue || defaultFilter[field];
@@ -102,9 +102,9 @@ function getFilterFromParams(searchParams) {
 
 function getDefaultEmail() {
   return {
-    to: '',
-    subject: '',
-    body: '',
+    to: "",
+    subject: "",
+    body: "",
   };
 }
 
@@ -128,33 +128,33 @@ async function getUnreadEmailsCount() {
 }
 
 function _filterEmailsBy(emails, filterBy) {
-  let { txt = '', isRead = null, folder } = filterBy;
-  const regexTxtTerm = new RegExp(txt, 'i');
+  let { txt = "", isRead = null, folder } = filterBy;
+  const regexTxtTerm = new RegExp(txt, "i");
   let filteredEmails = [];
 
   switch (folder) {
-    case 'trash':
+    case "trash":
       filteredEmails = emails.filter((email) => email.removedAt);
       break;
-    case 'drafts':
+    case "drafts":
       filteredEmails = emails.filter(
         (email) =>
           !email.sentAt && !email.removedAt && email.from === loggedinUser.email
       );
       break;
-    case 'inbox':
+    case "inbox":
       filteredEmails = emails.filter(
         (email) =>
           email.to === loggedinUser.email && email.sentAt && !email.removedAt
       );
       break;
-    case 'sent':
+    case "sent":
       filteredEmails = emails.filter(
         (email) =>
           email.from === loggedinUser.email && email.sentAt && !email.removedAt
       );
       break;
-    case 'starred':
+    case "starred":
       filteredEmails = emails.filter(
         (email) => email.isStarred && !email.removedAt
       );
@@ -181,13 +181,18 @@ function _createEmails() {
   let emails = utilService.loadFromStorage(STORAGE_KEY);
   if (!emails || !emails.length) {
     const arrLength = 30;
-    const contactList = ['user@appsus.com', 'done@gmail.com', 'sun@gmail.com'];
-    const subjectsList = ['Hi, how are you', 'Welcome', 'Join now'];
-    const bodyList = ['this is a body', 'body', 'different body'];
+    const contactList = ["user@appsus.com", "done@gmail.com", "sun@gmail.com"];
+    const subjectsList = ["Hi, how are you", "Welcome", "Join now"];
+    const bodyList = ["this is a body", "body", "different body"];
     const booleanValuesList = [true, false];
     const booleanValuesWithNullList = [true, false, null];
 
     emails = Array.from({ length: arrLength }, (_, idx) => {
+      const from = utilService.getRandomValue(contactList);
+      const emailToSend = utilService.getRandomValue(contactList);
+      // Ensure generate emails are sent from logged in user email or sent to him
+      const to = from === loggedinUser.email ? emailToSend : loggedinUser.email;
+
       return {
         id: `e0${idx}`,
         subject: utilService.getRandomValue(subjectsList),
@@ -199,8 +204,8 @@ function _createEmails() {
           null,
           utilService.getRandomTimestampIn24Hours(),
         ]),
-        from: utilService.getRandomValue(contactList),
-        to: utilService.getRandomValue(contactList),
+        from,
+        to,
       };
     });
   }
