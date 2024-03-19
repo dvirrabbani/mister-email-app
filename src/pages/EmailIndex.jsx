@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Outlet, useParams, useSearchParams } from 'react-router-dom';
-import { emailService } from '../services/email.service';
-import { EmailIndexHeader } from '../cmps/EmailIndexHeader';
-import { EmailNavbar } from '../cmps/EmailNavbar';
-import { AddonList } from '../cmps/AddonList';
-import { EmailCompose } from '../cmps/EmailCompose';
+import { useEffect, useState } from "react";
+import { Outlet, useParams, useSearchParams } from "react-router-dom";
+import { emailService } from "../services/email.service";
+import { EmailIndexHeader } from "../cmps/EmailIndexHeader";
+import { EmailNavbar } from "../cmps/EmailNavbar";
+import { AddonList } from "../cmps/AddonList";
+import { EmailCompose } from "../cmps/EmailCompose";
 
 export function EmailIndex() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,7 +22,6 @@ export function EmailIndex() {
   useEffect(() => {
     setSearchParams(emailService.sentizeFilterBy(filterBy));
     loadEmails();
-    loadUnreadEmails();
   }, [filterBy]);
 
   useEffect(() => {
@@ -36,11 +35,15 @@ export function EmailIndex() {
   useEffect(() => {
     if (!isComposeOpen) {
       setSearchParams((prevSearchParams) => {
-        prevSearchParams.delete('compose');
+        prevSearchParams.delete("compose");
         return prevSearchParams;
       });
     }
   }, [isComposeOpen]);
+
+  useEffect(() => {
+    loadUnreadEmails();
+  }, [emails]);
 
   async function loadEmails() {
     try {
@@ -50,7 +53,7 @@ export function EmailIndex() {
       });
       setEmails(emails);
     } catch (error) {
-      console.log('Error in load emails', error);
+      console.log("Error in load emails", error);
     }
   }
 
@@ -63,7 +66,7 @@ export function EmailIndex() {
     try {
       let emailToRemove = emails.find((email) => email.id === emailId);
 
-      if (params.folder === 'trash') {
+      if (params.folder === "trash") {
         await emailService.remove(emailId);
       } else {
         await emailService.save({
@@ -76,7 +79,7 @@ export function EmailIndex() {
         return prevEmails.filter((currEmail) => currEmail.id !== emailId);
       });
     } catch (err) {
-      console.log('Error in Remove email', err);
+      console.log("Error in Remove email", err);
     }
   }
 
@@ -89,7 +92,7 @@ export function EmailIndex() {
         )
       );
     } catch (err) {
-      console.log('Error in update email', err);
+      console.log("Error in update email", err);
     }
   }
 
@@ -102,8 +105,8 @@ export function EmailIndex() {
   }
 
   function onChangeEmailCompose(searchParams) {
-    const composeParam = searchParams.get('compose');
-    if (composeParam && !composeParam === 'new') {
+    const composeParam = searchParams.get("compose");
+    if (composeParam && !composeParam === "new") {
       const defaultEmail = emailService.getDefaultEmail();
       const composeEmailToUpdate = {};
       for (const [key, value] of Object.entries(defaultEmail)) {
@@ -114,11 +117,11 @@ export function EmailIndex() {
     setEmailComposeVisible(composeParam);
   }
 
-  const { txt } = filterBy;
+  const { txt, isRead } = filterBy;
   if (!emails) return <div>loading...</div>;
   return (
     <section className="email-index">
-      <EmailIndexHeader filterBy={{ txt }} onSetFilter={onSetFilter} />
+      <EmailIndexHeader filterBy={{ txt, isRead }} onSetFilter={onSetFilter} />
       <EmailNavbar
         setEmailComposeVisible={setEmailComposeVisible}
         unreadEmailsCount={unreadEmailsCount}

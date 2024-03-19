@@ -112,11 +112,7 @@ async function getUnreadEmailsCount() {
   let emails = await storageService.query(STORAGE_KEY);
   const unreadEmailsCount = {
     inbox: emails.filter(
-      (email) =>
-        email.to === loggedinUser.email &&
-        email.sentAt &&
-        !email.removedAt &&
-        !email.isRead
+      (email) => email.sentAt && !email.removedAt && !email.isRead
     ).length,
 
     drafts: emails.filter(
