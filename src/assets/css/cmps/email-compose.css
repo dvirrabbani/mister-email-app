@@ -2,6 +2,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
+  z-index: 1;
 }
 
 .email-compose-container .email-compose {
@@ -38,7 +39,6 @@
   background-color: var(--btn-primary-color);
   border-radius: 8px;
   padding: 10px 16px;
-
   color: var(--white);
 }
 .email-compose-container .email-compose-form .submit-btn:hover {
