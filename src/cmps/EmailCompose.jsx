@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import { emailService } from '../services/email.service';
-import { useEffectUpdate } from '../customHooks/useEffectUpdate';
+import { useEffect, useRef, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import { emailService } from "../services/email.service";
+import { useEffectUpdate } from "../customHooks/useEffectUpdate";
 
 export function EmailCompose({
   composeEmail,
@@ -11,9 +11,12 @@ export function EmailCompose({
   const [emailToEdit, setEmailToEdit] = useState(
     composeEmail || emailService.getDefaultEmail()
   );
-
   const draftTimeoutRef = useRef();
   const savedToDraftDuration = 5000;
+
+  useEffect(() => {
+    setEmailToEdit(() => composeEmail);
+  }, [composeEmail]);
 
   useEffectUpdate(() => {
     if (!emailToEdit.id) {
@@ -46,10 +49,10 @@ export function EmailCompose({
       ev.preventDefault();
       await emailService.send(emailToEdit);
       onCloseCompose();
-      showSuccessMsg('Email Sent successfully');
+      showSuccessMsg("Email Sent successfully");
       loadEmails();
     } catch (error) {
-      console.log('Had Some issue saving email', emailToEdit);
+      console.log("Had Some issue saving email", emailToEdit);
     }
   }
 

@@ -20,9 +20,15 @@ export function EmailIndex() {
   );
 
   useEffect(() => {
-    setSearchParams(emailService.sentizeFilterBy(filterBy));
+    updateSearchParams();
     loadEmails();
   }, [filterBy]);
+
+  function updateSearchParams() {
+    let composeParam = searchParams.get("compose");
+    let compose = composeParam ? { compose: composeParam } : {};
+    setSearchParams({ ...emailService.sentizeFilterBy(filterBy), ...compose });
+  }
 
   useEffect(() => {
     onSetFilter(emailService.getDefaultFilter());
@@ -103,18 +109,30 @@ export function EmailIndex() {
   function setEmailComposeVisible(value) {
     setIsComposeOpen(() => value);
   }
-
   function onChangeEmailCompose(searchParams) {
     const composeParam = searchParams.get("compose");
-    if (composeParam && !composeParam === "new") {
-      const defaultEmail = emailService.getDefaultEmail();
+    if (composeParam === "new") {
       const composeEmailToUpdate = {};
+
+      const defaultEmail = emailService.getDefaultEmail();
       for (const [key, value] of Object.entries(defaultEmail)) {
         composeEmailToUpdate[key] = searchParams.get(key) || value;
       }
       setComposeEmail(() => composeEmailToUpdate);
+    } else if (composeParam) {
+      const [id, to, subject, body] = composeParam.split(",");
+      const composeEmailToUpdate = {
+        id,
+        to,
+        subject,
+        body,
+      };
+
+      setComposeEmail(() => composeEmailToUpdate);
     }
-    setEmailComposeVisible(composeParam);
+    if (!isComposeOpen) {
+      setEmailComposeVisible(composeParam);
+    }
   }
 
   const { txt, isRead } = filterBy;
