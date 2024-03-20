@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TuneIcon from "@mui/icons-material/Tune";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
@@ -7,6 +7,10 @@ import { EmailFilterModal } from "./EmailFilterModal";
 export function EmailFilter({ filterBy, onSetFilter }) {
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
   const [showFilterModal, setShowFilterModal] = useState(false);
+
+  useEffect(() => {
+    setFilterByToEdit(filterBy);
+  }, [filterBy]);
 
   function onSubmitFilter(ev) {
     ev.preventDefault();
@@ -18,6 +22,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }));
   }
 
+  const { txt } = filterByToEdit;
   return (
     <section className="email-filter">
       <form className="search-bar" onSubmit={onSubmitFilter}>
@@ -41,7 +46,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
       </form>
       {showFilterModal && (
         <EmailFilterModal
-          filterBy={filterBy}
+          filterBy={{ txt }}
           onSetFilter={onSetFilter}
           setShowFilterModal={setShowFilterModal}
         />

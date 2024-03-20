@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 
 export function EmailFilterModal({
@@ -7,6 +7,13 @@ export function EmailFilterModal({
   setShowFilterModal,
 }) {
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
+
+  useEffect(() => {
+    setFilterByToEdit((prevFilterBy) => ({
+      ...prevFilterBy,
+      txt: filterBy.txt,
+    }));
+  }, [filterBy.txt]);
 
   function handleChangeIsRead(ev) {
     let { value } = ev.target;
