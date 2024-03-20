@@ -25,7 +25,6 @@
 }
 
 .email-index > .email-index-content {
-  position: relative;
   grid-area: m;
   height: calc(
     100vh - var(--mail-page-header-height) - var(--mail-page-layout-row-gap) * 2

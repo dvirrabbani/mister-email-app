@@ -1,0 +1,39 @@
+.email-filter-modal {
+  padding: 24px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%);
+  background-color: var(--white);
+  max-width: 720px;
+  min-width: 334px;
+  position: absolute;
+  z-index: 1;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+
+  .email-filter-modal_form {
+    display: grid;
+    row-gap: 20px;
+
+    .form-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: #5f6368;
+
+      label {
+        min-width: 88px;
+      }
+      select {
+        width: 100%;
+      }
+
+      button {
+        margin-inline-start: auto;
+      }
+    }
+  }
+}
